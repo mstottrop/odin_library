@@ -2,7 +2,6 @@ const myLibrary = [];
 const showBtn = document.getElementById("showDialog");
 const dialog = document.getElementById("dialog");
 const closeBtn = document.getElementById("closeBtn");
-const bookCard = document.querySelector(".card");
 const bookWrapper = document.querySelector(".bookWrapper");
 
 function Book(title, author, pages, completionStatus) {
@@ -27,8 +26,22 @@ function Book(title, author, pages, completionStatus) {
 function displayBooks() {
   const card = document.querySelectorAll(".card");
 
-  if (card.length === myLibrary.length) {
+  if (card.length >= myLibrary.length) {
     card.forEach((element, currentIndex) => {
+      element.dataset.book = myLibrary[currentIndex].title;
+      let toggleButton = element.querySelector(
+        "[data-icon='mdi-toggle-switch-off']"
+      );
+      toggleButton.addEventListener("click", (e) => {
+        // console.log("Test: " + element.dataset.book.value);
+      });
+      let deleteButton = element.querySelector(
+        "[data-icon='mdi-remove-octagon']"
+      );
+      deleteButton.addEventListener("click", function (e) {
+        console.log("Test: " + element.dataset.book);
+        deleteBooks(element);
+      });
       element.querySelector(".title").textContent =
         myLibrary[currentIndex].title;
       element.querySelector(".author").textContent =
@@ -45,9 +58,29 @@ function displayBooks() {
   }
 }
 
+function deleteBooks(params) {
+  const titleOfBook = params.getAttribute("data-book");
+  const indexOfTitleInArray = myLibrary
+    .map((e) => e.title)
+    .indexOf(titleOfBook);
+  myLibrary.splice(indexOfTitleInArray, 1);
+  bookWrapper.removeChild(params);
+}
+
 function createNewCard() {
   const newCard = document.createElement("div");
   newCard.classList.add("card");
+  const buttonDiv = document.createElement("div");
+  buttonDiv.classList.add("cardButtons");
+  const toggleButton = document.createElement("span");
+  toggleButton.classList.add("iconify");
+  toggleButton.setAttribute("data-icon", "mdi-remove-octagon");
+  const deleteButton = document.createElement("span");
+  deleteButton.classList.add("iconify");
+  deleteButton.setAttribute("data-icon", "mdi-toggle-switch-off");
+  buttonDiv.appendChild(toggleButton);
+  buttonDiv.appendChild(deleteButton);
+  newCard.appendChild(buttonDiv);
   const titleParagraph = document.createElement("p");
   titleParagraph.classList.add("title");
   newCard.appendChild(titleParagraph);

@@ -12,6 +12,7 @@
   display: grid;
   align-items: center;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  justify-items: start;
   gap: 15px;
 }
 
@@ -19,16 +20,29 @@
   background-color: #ffffff;
   color: black;
   text-align: center;
-  height: 200px;
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   box-shadow: -11px 0px 5px 0px rgb(219 184 85);
-  height: fit-content;
+}
+
+.cardButtons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  gap: 5rem;
+  margin-top: 0.5rem;
+}
+
+.cardButtons > .iconify {
+  height: 1.5rem;
+  width: 1.5rem;
 }
 
 .card p {
   color: black;
   font-weight: normal;
   font-size: 14px;
+  grid-column: 1 / 1;
 }
 
 .card .title {
