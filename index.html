@@ -7,6 +7,54 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="mainWrapper">
+      <div class="header">
+        <p>This is a header</p>
+      </div>
+      <div class="bookWrapper">
+        <div class="card">
+          <p class="title">Book Title</p>
+          <p class="author">Author</p>
+          <p class="pages">Pages</p>
+          <p class="completion">Completed?</p>
+        </div>
+      </div>
+      <div class="buttonWrapper">
+        <!-- A modal dialog containing a form -->
+        <dialog id="dialog">
+          <form method="dialog">
+            <p>
+              <label>
+                What is the name of the book?
+                <input type="text" class="titleInput" />
+              </label>
+              <label>
+                What is the author of the book?
+                <input type="text" class="authorInput" />
+              </label>
+              <label>
+                How many pages does the book have?
+                <input type="text" class="pagesInput" />
+              </label>
+              <label>
+                Did you already read the book?
+                <input type="text" class="completionInput" />
+              </label>
+            </p>
+            <div>
+              <input type="submit" id="closeBtn" value="Close" />
+            </div>
+          </form>
+        </dialog>
+        <p>
+          <button id="showDialog" style="display: flex; justify-self: center">
+            Add books
+          </button>
+        </p>
+        <output></output>
+        <!-- A modal dialog containing a form -->
+      </div>
+    </div>
     <script src="scripts.js"></script>
   </body>
 </html>
