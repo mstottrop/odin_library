@@ -36,6 +36,8 @@
 .cardButtons > .iconify {
   height: 1.5rem;
   width: 1.5rem;
+  pointer-events: auto;
+  cursor: pointer; /* optional, um den Mauszeiger zu ändern */
 }
 
 .card p {

@@ -23,77 +23,76 @@ function Book(title, author, pages, completionStatus) {
   return this;
 }
 
-function displayBooks() {
-  const card = document.querySelectorAll(".card");
+function deleteBooks(cardElement) {
+  console.log("Deleting Card: ", cardElement); // Debugging
 
-  if (card.length >= myLibrary.length) {
-    card.forEach((element, currentIndex) => {
-      element.dataset.book = myLibrary[currentIndex].title;
-      let toggleButton = element.querySelector(
-        "[data-icon='mdi-toggle-switch-off']"
-      );
-      toggleButton.addEventListener("click", (e) => {
-        // console.log("Test: " + element.dataset.book.value);
-      });
-      let deleteButton = element.querySelector(
-        "[data-icon='mdi-remove-octagon']"
-      );
-      deleteButton.addEventListener("click", function (e) {
-        console.log("Test: " + element.dataset.book);
-        deleteBooks(element);
-      });
-      element.querySelector(".title").textContent =
-        myLibrary[currentIndex].title;
-      element.querySelector(".author").textContent =
-        myLibrary[currentIndex].author;
-      element.querySelector(".pages").textContent =
-        myLibrary[currentIndex].pages;
-      element.querySelector(".completion").textContent =
-        myLibrary[currentIndex].completionStatus;
-    });
+  if (cardElement && bookWrapper.contains(cardElement)) {
+    bookWrapper.removeChild(cardElement);
   } else {
-    const newBookCard = createNewCard();
-    bookWrapper.appendChild(newBookCard);
-    displayBooks();
+    console.log("The element doesn't exist or has already been removed.");
+  }
+
+  const titleOfBook = cardElement.querySelector(".title").textContent;
+  const indexOfTitleInArray = myLibrary.findIndex(
+    (book) => book.title === titleOfBook
+  );
+  if (indexOfTitleInArray !== -1) {
+    myLibrary.splice(indexOfTitleInArray, 1);
   }
 }
 
-function deleteBooks(params) {
-  const titleOfBook = params.getAttribute("data-book");
-  const indexOfTitleInArray = myLibrary
-    .map((e) => e.title)
-    .indexOf(titleOfBook);
-  myLibrary.splice(indexOfTitleInArray, 1);
-  bookWrapper.removeChild(params);
-}
-
-function createNewCard() {
+function createNewCard(book) {
   const newCard = document.createElement("div");
   newCard.classList.add("card");
+
+  // Create the buttons
   const buttonDiv = document.createElement("div");
   buttonDiv.classList.add("cardButtons");
+
   const toggleButton = document.createElement("span");
   toggleButton.classList.add("iconify");
-  toggleButton.setAttribute("data-icon", "mdi-remove-octagon");
+  toggleButton.setAttribute("data-icon", "mdi-toggle-switch-off");
+
   const deleteButton = document.createElement("span");
   deleteButton.classList.add("iconify");
-  deleteButton.setAttribute("data-icon", "mdi-toggle-switch-off");
+  deleteButton.setAttribute("data-icon", "mdi-remove-octagon");
+
   buttonDiv.appendChild(toggleButton);
   buttonDiv.appendChild(deleteButton);
   newCard.appendChild(buttonDiv);
+
+  // add book information
   const titleParagraph = document.createElement("p");
   titleParagraph.classList.add("title");
-  newCard.appendChild(titleParagraph);
+  titleParagraph.textContent = book.title;
+
   const authorParagraph = document.createElement("p");
   authorParagraph.classList.add("author");
-  newCard.appendChild(authorParagraph);
+  authorParagraph.textContent = book.author;
+
   const pagesParagraph = document.createElement("p");
   pagesParagraph.classList.add("pages");
-  newCard.appendChild(pagesParagraph);
+  pagesParagraph.textContent = book.pages;
+
   const completionParagraph = document.createElement("p");
   completionParagraph.classList.add("completion");
+  completionParagraph.textContent = book.completionStatus;
+
+  newCard.appendChild(titleParagraph);
+  newCard.appendChild(authorParagraph);
+  newCard.appendChild(pagesParagraph);
   newCard.appendChild(completionParagraph);
-  return newCard;
+
+  // Add to bookWrapper
+  bookWrapper.appendChild(newCard);
+
+  bookWrapper.addEventListener("click", (e) => {
+    if (e.target.closest("[data-icon='mdi-remove-octagon']")) {
+      console.log(e.target);
+      const cardToRemove = e.target.closest(".card");
+      deleteBooks(cardToRemove);
+    }
+  });
 }
 
 showBtn.addEventListener("click", () => {
@@ -121,13 +120,15 @@ function updateBooks() {
     const pagesInput = getInputValue(".pagesInput");
     const completionInput = getInputValue(".completionInput");
 
-    myLibrary.push(
-      new Book(titleInput, authorInput, pagesInput, completionInput)
+    const newBook = new Book(
+      titleInput,
+      authorInput,
+      pagesInput,
+      completionInput
     );
+    myLibrary.push(newBook);
+    createNewCard(newBook);
   } catch (error) {
     alert("There was an error: " + error.message);
   }
-  if (myLibrary.length > 0) {
-    displayBooks();
-  } else console.log("nothing to update");
 }
