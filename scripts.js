@@ -1,5 +1,4 @@
 const myLibrary = [];
-const showBtn = document.getElementById("showDialog");
 const dialog = document.getElementById("dialog");
 const closeBtn = document.getElementById("closeBtn");
 const bookWrapper = document.querySelector(".bookWrapper");
