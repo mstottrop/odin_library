@@ -3,6 +3,13 @@ const showBtn = document.getElementById("showDialog");
 const dialog = document.getElementById("dialog");
 const closeBtn = document.getElementById("closeBtn");
 const bookWrapper = document.querySelector(".bookWrapper");
+const headerButton = document.querySelector(".headerButton");
+
+headerButton.addEventListener("click", (e) => {
+  if (e.target.closest("[data-icon='mdi-book-plus']")) {
+    dialog.showModal();
+  }
+});
 
 function Book(title, author, pages, completionStatus) {
   this.title = title;
@@ -23,9 +30,12 @@ function Book(title, author, pages, completionStatus) {
   return this;
 }
 
-function deleteBooks(cardElement) {
-  console.log("Deleting Card: ", cardElement); // Debugging
+function addInitialBook() {
+  const newBook = new Book("mein Title", "my Author", "254 pages", "done");
+  myLibrary.push(newBook);
+}
 
+function deleteBooks(cardElement) {
   if (cardElement && bookWrapper.contains(cardElement)) {
     bookWrapper.removeChild(cardElement);
   } else {
@@ -88,7 +98,6 @@ function createNewCard(book) {
 
   bookWrapper.addEventListener("click", (e) => {
     if (e.target.closest("[data-icon='mdi-remove-octagon']")) {
-      console.log(e.target);
       const cardToRemove = e.target.closest(".card");
       deleteBooks(cardToRemove);
     }

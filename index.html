@@ -9,11 +9,21 @@
   <body>
     <div class="mainWrapper">
       <div class="header">
-        <p>This is a header</p>
+        <div class="headerButton">
+          <span class="iconify" data-icon="mdi-book-plus"></span>
+        </div>
+        <div class="headerTitle">
+          <p>BetterReads - a library build just for you!</p>
+        </div>
+      </div>
+      <div class="sidebar">
+        <div class="buttonDiv">
+          <p>This is a sidebar</p>
+          <button id="showDialog">Add books</button>
+        </div>
       </div>
       <div class="bookWrapper"></div>
       <div class="buttonWrapper">
-        <!-- A modal dialog containing a form -->
         <dialog id="dialog">
           <form method="dialog">
             <p>
@@ -39,13 +49,8 @@
             </div>
           </form>
         </dialog>
-        <p>
-          <button id="showDialog" style="display: flex; justify-self: center">
-            Add books
-          </button>
-        </p>
-        <output></output>
-        <!-- A modal dialog containing a form -->
+        <p></p>
+        <!-- <output></output> -->
       </div>
     </div>
     <script src="scripts.js"></script>
